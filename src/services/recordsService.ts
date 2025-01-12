@@ -1,4 +1,5 @@
-const API_BASE_URL = "http://localhost:4000";
+import API_BASE_URL from "../config/config";
+
 
 export const recordsService = {
   async today(): Promise<any> {
