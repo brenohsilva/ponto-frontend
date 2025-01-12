@@ -21,37 +21,46 @@ const Timeline: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const { registerPoint } = useRegisterPoint();
 
+  const fetchTodayRecords = async () => {
+    try {
+      const response = await recordsService.today();
+      const { data } = response;
+      const newEvents: Event[] = [
+        {
+          time: data.entry ? formatTime(data.entry) : null,
+          icon: !!data.entry,
+        },
+        {
+          time: data.lunchStart ? formatTime(data.lunchStart) : null,
+          icon: !!data.lunchStart,
+        },
+        {
+          time: data.lunchEnd ? formatTime(data.lunchEnd) : null,
+          icon: !!data.lunchEnd,
+        },
+        { time: data.exit ? formatTime(data.exit) : null, icon: !!data.exit },
+      ];
+
+      setEvents(newEvents);
+      setWorkedHours(data.workedHours);
+      setLoading(false);
+    } catch (err) {
+      console.error("Erro ao buscar os registros do dia:", err);
+    }
+  };
+
   useEffect(() => {
-    const getRecords = async () => {
-      try {
-        const response = await recordsService.today();
-        const { data } = response;
-        const newEvents: Event[] = [
-          {
-            time: data.entry ? formatTime(data.entry) : null,
-            icon: !!data.entry,
-          },
-          {
-            time: data.lunchStart ? formatTime(data.lunchStart) : null,
-            icon: !!data.lunchStart,
-          },
-          {
-            time: data.lunchEnd ? formatTime(data.lunchEnd) : null,
-            icon: !!data.lunchEnd,
-          },
-          { time: data.exit ? formatTime(data.exit) : null, icon: !!data.exit },
-        ];
-
-        setEvents(newEvents);
-        setWorkedHours(data.workedHours);
-        setLoading(false);
-      } catch (err) {
-        console.error("Erro ao buscar os registros do dia:", err);
-      }
-    };
-
-    getRecords();
+    fetchTodayRecords();
   }, []);
+
+  const handleRegisterPoint = async () => {
+    try {
+      await registerPoint(); 
+      await fetchTodayRecords();
+    } catch (err) {
+      console.error("Erro ao registrar ponto:", err);
+    }
+  };
 
   const formatTime = (dateString: string): string => {
     const date = new Date(dateString);
@@ -60,9 +69,18 @@ const Timeline: React.FC = () => {
     return `${hours}:${minutes}`;
   };
 
-  if (loading) { return (
-    <Loading/>
-  )
+  const formatWorkedHours = (workedHours: number): string => {
+    const totalSeconds = Math.round(workedHours * 3600);
+    const hours = Math.floor(totalSeconds / 3600).toString().padStart(2, "0");
+    const minutes = Math.floor((totalSeconds % 3600) / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
   return (
@@ -87,9 +105,14 @@ const Timeline: React.FC = () => {
       </div>
       <div className="d-flex flex-column gap-3 ">
         <span className="text-center">
-          Horas trabalhadas: <strong>{workedHours}</strong>
+          Horas trabalhadas: <strong>{formatWorkedHours(workedHours)}</strong>
         </span>
-        <button onClick={registerPoint} className="btn btn-warning text-white"> Registrar ponto</button>
+        <button
+          onClick={handleRegisterPoint}
+          className="btn btn-warning text-white"
+        >
+          Registrar ponto
+        </button>
       </div>
     </div>
   );

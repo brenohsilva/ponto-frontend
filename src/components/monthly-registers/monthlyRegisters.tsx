@@ -11,8 +11,8 @@ const MonthlyRegisters: React.FC = () => {
   const [history, setHistory] = useState<
     { date: string; workedHours: string; balance: string }[]
   >([]);
-  const [monthlyBalance, setMonthlyBalance] = useState<number>(0);
-  const [generalBalance, setGeneralBalance] = useState<number>(0);
+  const [monthlyBalance, setMonthlyBalance] = useState<string>("");
+  const [generalBalance, setGeneralBalance] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -32,6 +32,15 @@ const MonthlyRegisters: React.FC = () => {
   ];
 
   const years = ["2024", "2025"];
+
+  const formatBalance = (balance: number): string => {
+    const totalMinutes = Math.round(balance * 60);
+    const hours = Math.floor(Math.abs(totalMinutes) / 60);
+    const minutes = Math.abs(totalMinutes) % 60;
+    return `${balance < 0 ? "-" : "+"}${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+  };
 
   useEffect(() => {
     const getRecords = async () => {
@@ -56,23 +65,19 @@ const MonthlyRegisters: React.FC = () => {
 
           if (record) {
             return {
-              date: `${months[record.month - 1].slice(0, 3).toUpperCase()} ${record.day
-                .toString()
-                .padStart(2, "0")}`,
+              date: `${months[record.month - 1]
+                .slice(0, 3)
+                .toUpperCase()} ${record.day.toString().padStart(2, "0")}`,
               workedHours: record.workedHours
                 ? formatWorkedHours(record.workedHours)
                 : "FOLGA",
-              balance: record.balanceHours
-                ? `${record.balanceHours > 0 ? "+" : ""}${record.balanceHours.toFixed(2)}`
-                : "-",
+              balance: formatBalance(record.balanceHours || 0),
             };
           } else {
             return {
-              date: `${months[selectedMonth - 1].slice(0, 3).toUpperCase()} ${(
-                day + 1
-              )
-                .toString()
-                .padStart(2, "0")}`,
+              date: `${months[selectedMonth - 1]
+                .slice(0, 3)
+                .toUpperCase()} ${(day + 1).toString().padStart(2, "0")}`,
               workedHours: "NÃO REGISTRADO",
               balance: "-",
             };
@@ -88,15 +93,20 @@ const MonthlyRegisters: React.FC = () => {
     };
 
     const getBalances = async () => {
-      const balancesResponse = await employeeService.balances(
-        selectedMonth,
-        selectedYear
-      );
-      const generalBalanceResponse = await employeeService.balances();
-      setMonthlyBalance(balancesResponse.totalBalance);
-      setGeneralBalance(generalBalanceResponse.totalBalance);
+      try {
+        const balancesResponse = await employeeService.balances(
+          selectedMonth,
+          selectedYear
+        );
+        const generalBalanceResponse = await employeeService.balances();
+        setMonthlyBalance(formatBalance(balancesResponse.totalBalance));
+        setGeneralBalance(formatBalance(generalBalanceResponse.totalBalance));
+      } catch (err: any) {
+        console.error("Erro ao buscar saldos:", err);
+        setError("Erro ao carregar os saldos. Tente novamente.");
+      }
     };
-   
+
     getRecords();
     getBalances();
   }, [selectedMonth, selectedYear]);
@@ -104,11 +114,12 @@ const MonthlyRegisters: React.FC = () => {
   if (loading) {
     return <Loading />;
   }
+
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between mb-4">
         <select
-          className="form-select text-white bg-dark"
+          className="form-select text-white"
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(Number(e.target.value))}
         >
@@ -120,7 +131,7 @@ const MonthlyRegisters: React.FC = () => {
         </select>
 
         <select
-          className="form-select text-white bg-dark"
+          className="form-select text-white"
           value={selectedYear}
           onChange={(e) => setSelectedYear(Number(e.target.value))}
         >
@@ -141,7 +152,7 @@ const MonthlyRegisters: React.FC = () => {
           }}
         >
           <span>Saldo do Mês</span>
-          <strong>{monthlyBalance.toFixed(2)}</strong>
+          <strong>{monthlyBalance}</strong>
         </div>
         <div
           className="d-flex col-5 col-lg-2 flex-column align-items-center justify-content-center p-3"
@@ -151,7 +162,7 @@ const MonthlyRegisters: React.FC = () => {
           }}
         >
           <span>Saldo Geral</span>
-          <strong>{generalBalance.toFixed(2)}</strong>
+          <strong>{generalBalance}</strong>
         </div>
       </div>
 
@@ -162,6 +173,7 @@ const MonthlyRegisters: React.FC = () => {
         </span>
         <span style={{ width: "35%", textAlign: "right" }}>Saldo</span>
       </div>
+
       <div
         className="rounded p-3"
         style={{

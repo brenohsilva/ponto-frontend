@@ -6,4 +6,47 @@
 
   .point-container {
     background-color: #212E3E !important;
+
   }
+
+
+::-webkit-scrollbar {
+  width: 8px; /* Largura da barra vertical */
+  height: 8px; /* Altura da barra horizontal */
+}
+
+
+::-webkit-scrollbar-track {
+  background: #1b263b; /* Cor mais escura para o fundo */
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3); /* Cor sutil com opacidade */
+  border-radius: 4px; /* Bordas arredondadas */
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5); /* Mais visível ao hover */
+}
+
+@media (max-width: 768px) {
+  .point-container {
+   padding: 20px 30px !important;
+  }
+}
+
+
+  @media (min-width: 768px) {
+    .point-container {
+      min-width: 620px;
+    }
+  }
+
+  @media (min-width: 1020px) {
+    .point-container {
+      min-width: 920px;
+    }
+  }
+

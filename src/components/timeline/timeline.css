@@ -4,20 +4,20 @@
   margin-left: 30px;
   padding: 0 20px;
   border-left: 2px solid #2B3A4A;
-  height: calc(100vh - 600px);
+  height: calc(100vh - 520px);
   flex-grow: 1;
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 70px;
+  margin-bottom: 60px;
   display: flex;
   align-items: center;
 }
 
 .timeline-point {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   background-color: #E0E0E0;
   border-radius: 50%;
   position: relative;
@@ -36,7 +36,7 @@
 .timeline-time {
   color: #fff;
   font-size: 16px;
-  margin-left: 10px; 
+  margin-left: -20px; 
 }
 
 
@@ -53,12 +53,12 @@
   }
 
   .timeline-icon {
-    font-size: 22px; /* Ícone maior para o ponto */
+    font-size: 26px; /* Ícone maior para o ponto */
   }
 
   .timeline-time {
     font-size: 18px; /* Fonte maior para o horário */
-    margin-left: 15px; /* Mais espaço entre o ponto e o horário */
+    margin-left: -20px; /* Mais espaço entre o ponto e o horário */
   }
 
   .timeline-item {

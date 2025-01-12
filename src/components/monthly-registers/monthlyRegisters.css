@@ -1,8 +1,12 @@
 .bg-light-gray {
-    background-color: #2B3A4A;
-    color: #ffffff; 
-  }
-  
-  .form-select{
-    max-width: 125px;
-  }
+  background-color: #2b3a4a;
+  color: #ffffff;
+}
+
+.form-select {
+  max-width: 125px;
+}
+
+select {
+  background-color: #374251 !important;
+}
