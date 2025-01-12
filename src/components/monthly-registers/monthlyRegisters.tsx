@@ -10,6 +10,8 @@ const MonthlyRegisters: React.FC = () => {
   const [history, setHistory] = useState<
     { date: string; workedHours: string; balance: string }[]
   >([]);
+  const [monthlyBalance, setMonthlyBalance] = useState<number>(0);
+  const [generalBalance, setGeneralBalance] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
 
   const months = [
@@ -82,7 +84,18 @@ const MonthlyRegisters: React.FC = () => {
       }
     };
 
+    const getBalances = async () => {
+      const balancesResponse = await employeeService.balances(
+        selectedMonth,
+        selectedYear
+      );
+      const generalBalanceResponse = await employeeService.balances();
+      setMonthlyBalance(balancesResponse.totalBalance);
+      setGeneralBalance(generalBalanceResponse.totalBalance);
+    };
+
     getRecords();
+    getBalances()
   }, [selectedMonth, selectedYear]);
 
   return (
@@ -113,7 +126,6 @@ const MonthlyRegisters: React.FC = () => {
         </select>
       </div>
 
-      {/* Saldos */}
       <div className="row d-flex justify-content-center mb-4">
         <div
           className="d-flex col-5 col-lg-2 flex-column align-items-center border-end border-black justify-content-center p-3"
@@ -123,7 +135,7 @@ const MonthlyRegisters: React.FC = () => {
           }}
         >
           <span>Saldo do Mês</span>
-          <strong>+00:36</strong>
+          <strong>{monthlyBalance.toFixed(2)}</strong>
         </div>
         <div
           className="d-flex col-5 col-lg-2 flex-column align-items-center justify-content-center p-3"
@@ -133,7 +145,7 @@ const MonthlyRegisters: React.FC = () => {
           }}
         >
           <span>Saldo Geral</span>
-          <strong>+40:15</strong>
+          <strong>{generalBalance.toFixed(2)}</strong>
         </div>
       </div>
 
