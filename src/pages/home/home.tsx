@@ -29,7 +29,7 @@ const Home: React.FC = () => {
         <div className="d-flex justify-content-md-between gap-2">
           <div className="d-none d-md-flex flex-column ">
             <img
-              src="src/assets/logo-ilumeo.png"
+              src="/logo-ilumeo.png"
               alt="Ilumeo Logo"
               width={150}
               height={58}
