@@ -1,0 +1,9 @@
+.timeline {
+    border-left: 2px solid #1B263B;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+
+  .point-container {
+    background-color: #212E3E !important;
+  }
