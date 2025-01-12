@@ -6,7 +6,7 @@ export function useRegisterPoint() {
 
   const registerPoint = async () => {
     try {
-      const response = await recordsService.setRecord();
+      await recordsService.setRecord();
       alert("Ponto registrado com sucesso!");
       navigate("/home");
     } catch (err: any) {
