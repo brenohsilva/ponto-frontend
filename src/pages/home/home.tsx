@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from "react";
 import Timeline from "../../components/timeline/timeline";
 import MonthlyRegisters from "../../components/monthly-registers/monthlyRegisters";
-import './home.css'
+import "./home.css";
 
 const Home: React.FC = () => {
+  const [activeMenu, setActiveMenu] = useState<string>("PONTO_DO_DIA");
   const [date, setDate] = useState(new Date());
 
   useEffect(() => {
@@ -53,70 +54,95 @@ const Home: React.FC = () => {
           </h4>
         </div>
         <div className="d-flex gap-2 justify-content-center">
-          <button className="btn btn-dark">PONTO DO DIA</button>
-          <button className="btn text-white">FOLHA DE PONTO MENSAL</button>
+          <button
+            className={`btn ${activeMenu === "PONTO_DO_DIA" ? "btn-dark" : "btn-outline-light"}`}
+            onClick={() => setActiveMenu("PONTO_DO_DIA")}
+          >
+            PONTO DO DIA
+          </button>
+          <button
+            className={`btn ${activeMenu === "FOLHA_DE_PONTO_MENSAL" ? "btn-dark" : "btn-outline-light"}`}
+            onClick={() => setActiveMenu("FOLHA_DE_PONTO_MENSAL")}
+          >
+            FOLHA DE PONTO MENSAL
+          </button>
         </div>
       </div>
-      <div className="d-flex flex-column d-lg-none d-md-none p-2 mb-4 rounded-2">
-        <div className="d-flex justify-content-center mt-4">
-          <div className=" d-flex gap-4">
-            <div className="d-flex flex-column bg-white text-black fw-bold px-3 py-2 align-items-center border border-1 rounded-4">
-              <span>{getMonth(date)}</span>
-              <span>{getDay(date)}</span>
-            </div>
-            <div className="d-flex align-items-center gap-3">
-              <span>{getWeekday(date)}</span>
-              <span>|</span>
-              <span>{getTime(date)}</span>
-            </div>
-          </div>
-        </div>
+      {activeMenu === "PONTO_DO_DIA" && (
         <div>
-          <Timeline />
-        </div>
-      </div>
-
-      <div className=" d-flex justify-content-center p-2 mb-4 rounded-2  ">
-        <div className="d-lg-flex flex-column d-none w-50 py-4 px-4 point-container ">
-          <div className="d-flex justify-content-center mt-4 ">
-            <div className=" d-flex gap-4">
-              <div className="d-flex flex-column bg-white text-black fw-bold px-3 py-2 align-items-center border border-1 rounded-4">
-                <span>{getMonth(date)}</span>
-                <span>{getDay(date)}</span>
+          <div className="d-flex flex-column d-lg-none d-md-none p-2 mb-4 rounded-2">
+            <div className="d-flex justify-content-center mt-4">
+              <div className=" d-flex gap-4">
+                <div className="d-flex flex-column bg-white text-black fw-bold px-3 py-2 align-items-center border border-1 rounded-4">
+                  <span>{getMonth(date)}</span>
+                  <span>{getDay(date)}</span>
+                </div>
+                <div className="d-flex align-items-center gap-3">
+                  <span>{getWeekday(date)}</span>
+                  <span>|</span>
+                  <span>{getTime(date)}</span>
+                </div>
               </div>
-              <div className="d-flex align-items-center gap-3">
-                <span>{getWeekday(date)}</span>
-                <span>|</span>
-                <span>{getTime(date)}</span>
+            </div>
+            <div>
+              <Timeline />
+            </div>
+          </div>
+
+          <div className=" d-flex justify-content-center p-2 mb-4 rounded-2  ">
+            <div className="d-lg-flex flex-column d-none w-50 py-4 px-4 point-container ">
+              <div className="d-flex justify-content-center mt-4 ">
+                <div className=" d-flex gap-4">
+                  <div className="d-flex flex-column bg-white text-black fw-bold px-3 py-2 align-items-center border border-1 rounded-4">
+                    <span>{getMonth(date)}</span>
+                    <span>{getDay(date)}</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-3">
+                    <span>{getWeekday(date)}</span>
+                    <span>|</span>
+                    <span>{getTime(date)}</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <Timeline />
               </div>
             </div>
           </div>
-          <div>
-            <Timeline />
+        </div>
+      )}
+
+      {activeMenu === "FOLHA_DE_PONTO_MENSAL" && (
+        <div>
+          <div className="d-sm-flex d-md-none d-lg-none mb-4">
+            <MonthlyRegisters />
+          </div>
+          <div className="d-none d-lg-flex mb-4 justify-content-center">
+            <div
+              style={{
+                backgroundColor: "#212E3E",
+                color: "#fff",
+                width: "920px",
+              }}
+              className="mt-3 rounded-2"
+            >
+              <MonthlyRegisters />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
-      {/* <div className="d-sm-flex d-md-none d-lg-none mb-4">
-        <MonthlyRegisters />
-      </div>
-
-      <div className="d-none d-lg-flex mb-4 justify-content-center">
-        <div style={{
-            backgroundColor: "#212E3E",
-            color: "#fff",
-            width: '920px'
-          }} className="mt-3 rounded-2" >
-      <MonthlyRegisters/>
+      {activeMenu === "PONTO_DO_DIA" && (
+        <div className="d-flex flex-column gap-3 ">
+          <span className="text-center">
+            Horas trabalhadas: <strong>09:04</strong>
+          </span>
+          <button className="btn btn-warning text-white">
+            {" "}
+            Registrar ponto
+          </button>
         </div>
-      </div> */}
-
-      <div className="d-flex flex-column gap-3 ">
-        <span className="text-center">
-          Horas trabalhadas: <strong>09:04</strong>
-        </span>
-        <button className="btn btn-warning text-white"> Registrar ponto</button>
-      </div>
+      )}
     </div>
   );
 };
