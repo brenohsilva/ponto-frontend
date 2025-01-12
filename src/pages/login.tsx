@@ -1,22 +1,47 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { authService } from "../services/authService";
+import { recordsService } from "../services/recordsService";
 
 const Login: React.FC = () => {
-  const [accessCode, setAccessCode] = useState<string>("");
+  const [accessCode, setAccessCode] = useState<string>(""); 
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [recordsToday, setRecordsToday] = useState<string>('');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      const fetchTodayRegister = async () => {
+        try {
+          const records = await recordsService.today();
+          setRecordsToday(records.data)
+        } catch (err: any) {
+          console.error("Erro ao trazer os registros:", err);
+        }
+      };
+  
+      fetchTodayRegister();
+    }, []);
 
   const changingInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccessCode(e.target.value.toUpperCase());
+    setErrorMessage(null); 
   };
 
   const confirmLogin = async () => {
     try {
       const response = await authService.login(accessCode);
-      console.log("Login bem-sucedido:", response);
       alert("Login realizado com sucesso!");
-      localStorage.setItem("token", response.token);
+      localStorage.setItem("token", response.access_token);
+      console.log(recordsToday)
+      if (recordsToday === 'first access') {
+        navigate("/preview"); 
+      } else {
+        navigate('/home')
+      }
     } catch (err: any) {
       console.log("Erro no login:", err.message);
+      setErrorMessage("Código de acesso inválido. Tente novamente.");
     }
   };
 
@@ -48,13 +73,25 @@ const Login: React.FC = () => {
           Código de Acesso
         </label>
         <input
-          type="text text-white"
+          type="text"
           id="accessCode"
           value={accessCode}
           onChange={changingInput}
-          className="form-control mb-4 py-3"
+          className="form-control mb-2 py-3"
           style={{ backgroundColor: "#000", color: "#fff" }}
         />
+
+        {errorMessage && (
+          <div
+            className="text-danger mb-3"
+            style={{
+              fontSize: "14px",
+              textAlign: "center",
+            }}
+          >
+            {errorMessage}
+          </div>
+        )}
 
         <button
           style={{ backgroundColor: "#F28B04" }}
