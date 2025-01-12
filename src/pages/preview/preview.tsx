@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { employeeService } from "../../services/employeeService";
+import { useRegisterPoint } from "../../hooks/useRegisterPoint";
 
 
 interface UserProfile {
@@ -13,6 +14,7 @@ const Preview: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<string>("");
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const { registerPoint } = useRegisterPoint();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -33,7 +35,7 @@ const Preview: React.FC = () => {
     const fetchUserProfile = async () => {
       try {
         const profile = await employeeService.profile();
-        console.log(profile)
+        console.log(profile);
         setUserProfile(profile);
       } catch (err: any) {
         console.error("Erro ao buscar o perfil:", err);
@@ -87,6 +89,7 @@ const Preview: React.FC = () => {
           </div>
           <button
             className="btn fw-bold mt-4"
+            onClick={registerPoint}
             style={{
               backgroundColor: "#F28B04",
               color: "#fff",

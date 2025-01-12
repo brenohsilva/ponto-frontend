@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { recordsService } from "../../services/recordsService"; // Importe o serviço
 import "./timeline.css";
+import { useRegisterPoint } from "../../hooks/useRegisterPoint";
 
 interface Event {
   time: string | null;
@@ -16,6 +17,7 @@ const Timeline: React.FC = () => {
   ]);
 
   const [workedHours, setWorkedHours] = useState<number>(0);
+  const { registerPoint } = useRegisterPoint();
 
   useEffect(() => {
     const getRecords = async () => {
@@ -80,7 +82,7 @@ const Timeline: React.FC = () => {
         <span className="text-center">
           Horas trabalhadas: <strong>{workedHours}</strong>
         </span>
-        <button className="btn btn-warning text-white"> Registrar ponto</button>
+        <button onClick={registerPoint} className="btn btn-warning text-white"> Registrar ponto</button>
       </div>
     </div>
   );
