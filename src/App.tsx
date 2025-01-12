@@ -1,13 +1,29 @@
-import "./App.css";
-import Home from "./pages/home/home";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/login";
+import Preview from "./pages/preview/preview";
+import Home from "./pages/home/home";
+import ProtectedRoute from "./components/utils/protected-routers";
 
-function App() {
+
+const App: React.FC = () => {
   return (
-    <>
-      <Home />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route
+          path="/preview"
+          element={
+            <ProtectedRoute>
+              <Preview />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/home" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
