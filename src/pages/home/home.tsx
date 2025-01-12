@@ -132,7 +132,7 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      {activeMenu === "PONTO_DO_DIA" && (
+      {/* {activeMenu === "PONTO_DO_DIA" && (
         <div className="d-flex flex-column gap-3 ">
           <span className="text-center">
             Horas trabalhadas: <strong>09:04</strong>
@@ -142,7 +142,7 @@ const Home: React.FC = () => {
             Registrar ponto
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
