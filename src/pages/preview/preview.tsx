@@ -1,9 +1,18 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { employeeService } from "../../services/employeeService";
+
+
+interface UserProfile {
+  username: string;
+  code: string;
+}
 
 const Preview: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [currentDate, setCurrentDate] = useState<string>("");
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -20,6 +29,21 @@ const Preview: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await employeeService.profile();
+        console.log(profile)
+        setUserProfile(profile);
+      } catch (err: any) {
+        console.error("Erro ao buscar o perfil:", err);
+        setError("Erro ao carregar os dados do usuário. Tente novamente.");
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   return (
     <div
       className="d-flex flex-column justify-content-between align-items-center vh-100 p-3"
@@ -32,11 +56,12 @@ const Preview: React.FC = () => {
             alt="Ilumeo Logo"
             width={155}
             height={63}
-            className=""
           />
         </div>
         <div className="text-end">
-          <span className="fw-bold">KLEMILUMEO</span>
+          <span className="fw-bold">
+            {userProfile ? userProfile.code : "Carregando..."}
+          </span>
           <small className="d-block">Código de acesso</small>
         </div>
       </header>
@@ -50,8 +75,11 @@ const Preview: React.FC = () => {
       >
         <div>
           <p className="text-center mb-4">
-            Olá, <strong className="fs-5">Breno Henrique da Silva</strong>,
-            <br /> registre o seu ponto agora!
+            Olá,{" "}
+            <strong className="fs-5">
+              {userProfile ? userProfile.username : "Carregando..."}
+            </strong>
+            ,<br /> registre o seu ponto agora!
           </p>
           <div className="d-flex flex-column text-center">
             <p className="mb-2 fs-3">{currentDate}</p>
@@ -68,13 +96,16 @@ const Preview: React.FC = () => {
               fontSize: "18px",
             }}
           >
-            Registrar ponto 
+            Registrar ponto
           </button>
         </div>
-        <div className=" image-container d-md-flex  d-lg-flex d-none w-50 ">
-          <img className="rounded-3" src="src/assets/people.png"
-          width="85%"
-           alt="people" />
+        <div className="image-container d-md-flex d-lg-flex d-none w-50">
+          <img
+            className="rounded-3"
+            src="src/assets/people.png"
+            width="85%"
+            alt="people"
+          />
         </div>
       </div>
 
@@ -91,6 +122,8 @@ const Preview: React.FC = () => {
           Folha mensal
         </button>
       </div>
+
+      {error && <div className="text-danger mt-3">{error}</div>}
     </div>
   );
 };
