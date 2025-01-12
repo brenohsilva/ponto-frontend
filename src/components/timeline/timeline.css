@@ -1,0 +1,67 @@
+.timeline {
+  position: relative;
+  margin: 40px 0;
+  margin-left: 30px;
+  padding: 0 20px;
+  border-left: 2px solid #2B3A4A;
+  height: calc(100vh - 600px);
+  flex-grow: 1;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-point {
+  width: 30px;
+  height: 30px;
+  background-color: #E0E0E0;
+  border-radius: 50%;
+  position: relative;
+  left: -35px;
+}
+
+.timeline-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 19px;
+  color: #F28B04;
+}
+
+.timeline-time {
+  color: #fff;
+  font-size: 16px;
+  margin-left: 10px; 
+}
+
+
+@media (min-width: 768px) {
+  .timeline {
+    margin-left: 220px;
+    height: calc(100vh - 490px); /* Ajusta o espaço da linha na versão desktop */
+  }
+
+  .timeline-point {
+    width: 40px; /* Aumenta o tamanho do ponto na versão desktop */
+    height: 40px;
+    left: -42px; /* Ajusta a posição do ponto */
+  }
+
+  .timeline-icon {
+    font-size: 22px; /* Ícone maior para o ponto */
+  }
+
+  .timeline-time {
+    font-size: 18px; /* Fonte maior para o horário */
+    margin-left: 15px; /* Mais espaço entre o ponto e o horário */
+  }
+
+  .timeline-item {
+    margin-bottom: 60px; /* Mais espaço entre os itens da timeline no desktop */
+  }
+}
