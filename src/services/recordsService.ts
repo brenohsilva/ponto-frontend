@@ -18,4 +18,24 @@ export const recordsService = {
 
     return response.json();
   },
+
+  async setRecord(): Promise<any> {
+    const token = localStorage.getItem("token");
+    const currentDateTime = new Date().toISOString(); 
+
+    const response = await fetch(`${API_BASE_URL}/records`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ record: currentDateTime }), 
+    });
+
+    if (!response.ok) {
+      throw new Error("Erro ao criar o registro: " + response.statusText);
+    }
+
+    return response.json();
+  },
 };
