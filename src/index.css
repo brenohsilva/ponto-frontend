@@ -9,3 +9,11 @@ body {
 html, body {
   width: 100%; 
 }
+
+.btn-warning {
+  background-color: #F28B04 !important;
+}
+
+.bg-dark {
+  background-color: #212E3E !important;
+}
