@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 
 import "./monthlyRegisters.css";
 import { employeeService } from "../../services/employeeService";
+import Loading from "../loading/loading";
 
 const MonthlyRegisters: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<number>(1);
@@ -12,6 +13,7 @@ const MonthlyRegisters: React.FC = () => {
   >([]);
   const [monthlyBalance, setMonthlyBalance] = useState<number>(0);
   const [generalBalance, setGeneralBalance] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const months = [
@@ -71,13 +73,14 @@ const MonthlyRegisters: React.FC = () => {
               )
                 .toString()
                 .padStart(2, "0")}`,
-              workedHours: "FOLGA",
+              workedHours: "NÃO REGISTRADO",
               balance: "-",
             };
           }
         });
 
         setHistory(formattedHistory);
+        setLoading(false);
       } catch (err: any) {
         console.error("Erro ao buscar registros:", err);
         setError("Erro ao carregar os registros. Tente novamente.");
@@ -93,11 +96,14 @@ const MonthlyRegisters: React.FC = () => {
       setMonthlyBalance(balancesResponse.totalBalance);
       setGeneralBalance(generalBalanceResponse.totalBalance);
     };
-
+   
     getRecords();
-    getBalances()
+    getBalances();
   }, [selectedMonth, selectedYear]);
 
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="container mt-4">
       <div className="d-flex justify-content-between mb-4">

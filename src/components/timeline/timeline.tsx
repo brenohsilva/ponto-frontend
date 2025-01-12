@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { recordsService } from "../../services/recordsService"; // Importe o serviço
 import "./timeline.css";
 import { useRegisterPoint } from "../../hooks/useRegisterPoint";
+import Loading from "../loading/loading";
 
 interface Event {
   time: string | null;
@@ -17,6 +18,7 @@ const Timeline: React.FC = () => {
   ]);
 
   const [workedHours, setWorkedHours] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
   const { registerPoint } = useRegisterPoint();
 
   useEffect(() => {
@@ -24,7 +26,6 @@ const Timeline: React.FC = () => {
       try {
         const response = await recordsService.today();
         const { data } = response;
-        console.log(response);
         const newEvents: Event[] = [
           {
             time: data.entry ? formatTime(data.entry) : null,
@@ -43,6 +44,7 @@ const Timeline: React.FC = () => {
 
         setEvents(newEvents);
         setWorkedHours(data.workedHours);
+        setLoading(false);
       } catch (err) {
         console.error("Erro ao buscar os registros do dia:", err);
       }
@@ -57,6 +59,11 @@ const Timeline: React.FC = () => {
     const minutes = date.getUTCMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   };
+
+  if (loading) { return (
+    <Loading/>
+  )
+  }
 
   return (
     <div>

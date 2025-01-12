@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { employeeService } from "../../services/employeeService";
 import { useRegisterPoint } from "../../hooks/useRegisterPoint";
-
+import { useNavigate } from "react-router-dom";
 
 interface UserProfile {
   username: string;
@@ -13,7 +12,7 @@ const Preview: React.FC = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
   const [currentDate, setCurrentDate] = useState<string>("");
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
   const { registerPoint } = useRegisterPoint();
 
   useEffect(() => {
@@ -33,18 +32,24 @@ const Preview: React.FC = () => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      try {
-        const profile = await employeeService.profile();
-        console.log(profile);
+      const username = localStorage.getItem("username");
+      const code = localStorage.getItem("code");
+      if (username && code) {
+        const profile: UserProfile = {
+          username,
+          code,
+        };
         setUserProfile(profile);
-      } catch (err: any) {
-        console.error("Erro ao buscar o perfil:", err);
-        setError("Erro ao carregar os dados do usuário. Tente novamente.");
       }
+
     };
 
     fetchUserProfile();
   }, []);
+
+  const redirectToMonhtlyRegisters = () => {
+    navigate("/home");
+  }
 
   return (
     <div
@@ -113,7 +118,8 @@ const Preview: React.FC = () => {
       </div>
 
       <div className="text-center">
-        <button
+        <button 
+        onClick={redirectToMonhtlyRegisters}
           className="btn p-2 px-3"
           style={{
             backgroundColor: "#2B3A4A",
@@ -126,7 +132,6 @@ const Preview: React.FC = () => {
         </button>
       </div>
 
-      {error && <div className="text-danger mt-3">{error}</div>}
     </div>
   );
 };
