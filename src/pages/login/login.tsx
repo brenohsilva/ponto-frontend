@@ -56,7 +56,7 @@ const Login: React.FC = () => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center vh-100">
       <img
-        src="src/assets/logo-ilumeo.png"
+        src="/logo-ilumeo.png"
         alt="Ilumeo Logo"
         width={274}
         height={106}

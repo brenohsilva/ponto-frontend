@@ -110,7 +110,7 @@ const Preview: React.FC = () => {
         <div className="image-container d-md-flex d-lg-flex d-none w-50">
           <img
             className="rounded-3"
-            src="src/assets/people.png"
+            src="/people.png"
             width="85%"
             alt="people"
           />
