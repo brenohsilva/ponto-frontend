@@ -1,43 +1,51 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authService } from "../services/authService";
-import { recordsService } from "../services/recordsService";
+import { authService } from "../../services/authService";
+import { recordsService } from "../../services/recordsService";
+import { employeeService } from "../../services/employeeService";
+
 
 const Login: React.FC = () => {
-  const [accessCode, setAccessCode] = useState<string>(""); 
+  const [accessCode, setAccessCode] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [recordsToday, setRecordsToday] = useState<string>('');
+  const [recordsToday, setRecordsToday] = useState<string>("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-      const fetchTodayRegister = async () => {
-        try {
-          const records = await recordsService.today();
-          setRecordsToday(records.data)
-        } catch (err: any) {
-          console.error("Erro ao trazer os registros:", err);
-        }
-      };
-  
-      fetchTodayRegister();
-    }, []);
+    const getTodayRegister = async () => {
+      try {
+        const records = await recordsService.today();
+        setRecordsToday(records.data);
+      } catch (err: any) {
+        console.error("Erro ao trazer os registros:", err);
+      }
+    };
+
+    const fetchUserProfile = async () => {
+      try {
+        const profile = await employeeService.profile();
+        localStorage.setItem("username", profile.username);
+        localStorage.setItem("code", profile.code);
+      } catch (err: any) {
+        console.error("Erro ao buscar o perfil:", err);
+      }
+    };
 
   const changingInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccessCode(e.target.value.toUpperCase());
-    setErrorMessage(null); 
+    setErrorMessage(null);
   };
 
   const confirmLogin = async () => {
     try {
       const response = await authService.login(accessCode);
-      alert("Login realizado com sucesso!");
       localStorage.setItem("token", response.access_token);
-      console.log(recordsToday)
-      if (recordsToday === 'first access') {
-        navigate("/preview"); 
+      await getTodayRegister()
+      await fetchUserProfile()
+      if (recordsToday === "first access") {
+        navigate("/preview");
       } else {
-        navigate('/home')
+        navigate("/home");
       }
     } catch (err: any) {
       console.log("Erro no login:", err.message);
