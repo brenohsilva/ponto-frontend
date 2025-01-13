@@ -48,7 +48,7 @@
     margin-left: 220px;
     height: calc(
       100vh - 490px
-    ); /* Ajusta o espaço da linha na versão desktop */
+    ); 
   }
 
   .timeline-point {
@@ -67,6 +67,13 @@
   }
 
   .timeline-item {
-    margin-bottom: 60px; /* Mais espaço entre os itens da timeline no desktop */
+    margin-bottom: 40px; /* Mais espaço entre os itens da timeline no desktop */
+  }
+}
+
+@media (min-height: 615px){
+  .timeline {
+    height: fit-content;
+    
   }
 }
