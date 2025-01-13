@@ -13,7 +13,6 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  
   const fetchUserProfile = async () => {
     try {
       const profile = await employeeService.profile();
@@ -37,6 +36,7 @@ const Login: React.FC = () => {
 
       const records = await recordsService.today();
       setRecordsToday(records.data);
+      console.log(recordsToday);
 
       await fetchUserProfile();
 
