@@ -59,7 +59,7 @@ const Preview: React.FC = () => {
       <header className="d-flex justify-content-between w-100 align-items-center mb-4">
         <div className="d-flex flex-column ">
           <img
-            src="src/assets/logo-ilumeo.png"
+            src="/logo-ilumeo.png"
             alt="Ilumeo Logo"
             width={155}
             height={63}
@@ -107,7 +107,7 @@ const Preview: React.FC = () => {
             Registrar ponto
           </button>
         </div>
-        <div className="image-container d-md-flex d-lg-flex d-none w-50">
+        <div className="image-container d-md-none d-lg-flex d-none w-50">
           <img
             className="rounded-3"
             src="/people.png"

@@ -13,15 +13,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const getTodayRegister = async () => {
-    try {
-      const records = await recordsService.today();
-      setRecordsToday(records.data);
-    } catch (err: any) {
-      console.error("Erro ao trazer os registros:", err);
-    }
-  };
-
+  
   const fetchUserProfile = async () => {
     try {
       const profile = await employeeService.profile();
@@ -42,15 +34,19 @@ const Login: React.FC = () => {
     try {
       const response = await authService.login(accessCode);
       localStorage.setItem("token", response.access_token);
-      await getTodayRegister();
+
+      const records = await recordsService.today();
+      setRecordsToday(records.data);
+
       await fetchUserProfile();
-      if (recordsToday === "first access") {
+
+      if (records.data === "first access") {
         navigate("/preview");
       } else {
         navigate("/home");
       }
     } catch (err: any) {
-      console.log("Erro no login:", err.message);
+      console.error("Erro no login:", err.message);
       setErrorMessage("Código de acesso inválido. Tente novamente.");
     } finally {
       setIsLoading(false);
