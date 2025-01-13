@@ -3,8 +3,8 @@
   margin: 40px 0;
   margin-left: 30px;
   padding: 0 20px;
-  border-left: 2px solid #2B3A4A;
-  height: calc(100vh - 480px);
+  border-left: 2px solid #2b3a4a;
+  height: calc(100vh - 470px);
   flex-grow: 1;
 }
 
@@ -18,7 +18,7 @@
 .timeline-point {
   width: 25px;
   height: 25px;
-  background-color: #E0E0E0;
+  background-color: #e0e0e0;
   border-radius: 50%;
   position: relative;
   left: -35px;
@@ -30,20 +30,25 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 19px;
-  color: #F28B04;
+  color: #f28b04;
 }
 
 .timeline-time {
   color: #fff;
   font-size: 16px;
-  margin-left: -20px; 
+  margin-left: -20px;
 }
 
+.worked-hours {
+  margin-top: 60px !important;
+}
 
 @media (min-width: 768px) {
   .timeline {
     margin-left: 220px;
-    height: calc(100vh - 490px); /* Ajusta o espaço da linha na versão desktop */
+    height: calc(
+      100vh - 490px
+    ); /* Ajusta o espaço da linha na versão desktop */
   }
 
   .timeline-point {

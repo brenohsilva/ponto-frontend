@@ -108,7 +108,7 @@ const Timeline: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="d-flex flex-column gap-3 mt-5 ">
+      <div className="worked-hours d-flex flex-column gap-3">
         <span className="text-center">
           Horas trabalhadas: <strong>{formatWorkedHours(workedHours)}</strong>
         </span>
