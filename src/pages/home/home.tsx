@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Timeline from "../../components/timeline/timeline";
 import MonthlyRegisters from "../../components/monthly-registers/monthlyRegisters";
 import "./home.css";
+import { Link } from "react-router-dom";
 
 const Home: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<string>("PONTO_DO_DIA");
@@ -30,13 +31,15 @@ const Home: React.FC = () => {
       <header>
         <div className="d-flex justify-content-md-between gap-2">
           <div className="d-none d-md-flex flex-column ">
-            <img
-              src="/logo-ilumeo.png"
-              alt="Ilumeo Logo"
-              width={150}
-              height={58}
-              className=""
-            />
+            <Link to={"/"}>
+              <img
+                src="/logo-ilumeo.png"
+                alt="Ilumeo Logo"
+                width={150}
+                height={58}
+                className=""
+              />
+            </Link>
           </div>
           <div className="d-flex align-content-center align-items-center border-white border-sm-end border-o pe-4 ">
             <h4 className="d-flex d-lg-none m-0 pb-3">{username || ""}</h4>

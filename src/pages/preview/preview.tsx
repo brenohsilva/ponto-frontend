@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useRegisterPoint } from "../../hooks/useRegisterPoint";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 interface UserProfile {
   username: string;
@@ -41,7 +42,6 @@ const Preview: React.FC = () => {
         };
         setUserProfile(profile);
       }
-
     };
 
     fetchUserProfile();
@@ -49,7 +49,7 @@ const Preview: React.FC = () => {
 
   const redirectToMonhtlyRegisters = () => {
     navigate("/home");
-  }
+  };
 
   return (
     <div
@@ -58,12 +58,14 @@ const Preview: React.FC = () => {
     >
       <header className="d-flex justify-content-between w-100 align-items-center mb-4">
         <div className="d-flex flex-column ">
-          <img
-            src="/logo-ilumeo.png"
-            alt="Ilumeo Logo"
-            width={155}
-            height={63}
-          />
+          <Link to={"/"}>
+            <img
+              src="/logo-ilumeo.png"
+              alt="Ilumeo Logo"
+              width={155}
+              height={63}
+            />
+          </Link>
         </div>
         <div className="text-end">
           <span className="fw-bold">
@@ -118,8 +120,8 @@ const Preview: React.FC = () => {
       </div>
 
       <div className="text-center">
-        <button 
-        onClick={redirectToMonhtlyRegisters}
+        <button
+          onClick={redirectToMonhtlyRegisters}
           className="btn p-2 px-3"
           style={{
             backgroundColor: "#2B3A4A",
@@ -131,7 +133,6 @@ const Preview: React.FC = () => {
           Folha mensal
         </button>
       </div>
-
     </div>
   );
 };
