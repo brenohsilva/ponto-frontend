@@ -110,7 +110,7 @@ const Login: React.FC = () => {
           >
             {isLoading ? (
               <span>
-                Entrando<span className="dot-animate">...</span>
+                Entrando<span className="dot-animate"></span>
               </span>
             ) : (
               "Confirmar"

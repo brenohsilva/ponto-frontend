@@ -19,6 +19,8 @@ const Timeline: React.FC = () => {
 
   const [workedHours, setWorkedHours] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [isRegistering, setIsRegistering] = useState<boolean>(false);
+
   const { registerPoint } = useRegisterPoint();
 
   const fetchTodayRecords = async () => {
@@ -54,11 +56,14 @@ const Timeline: React.FC = () => {
   }, []);
 
   const handleRegisterPoint = async () => {
+    setIsRegistering(true);
     try {
       await registerPoint();
       await fetchTodayRecords();
     } catch (err) {
       console.error("Erro ao registrar ponto:", err);
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -115,8 +120,15 @@ const Timeline: React.FC = () => {
         <button
           onClick={handleRegisterPoint}
           className="btn btn-warning text-white"
+          disabled={isRegistering} 
         >
-          Registrar ponto
+          {isRegistering ? (
+            <span>
+              Registrando<span className="dot-animate"></span>
+            </span>
+          ) : (
+            "Registrar ponto"
+          )}
         </button>
       </div>
     </div>

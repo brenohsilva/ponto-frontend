@@ -2,18 +2,40 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #151F2B !important;
+  background-color: #151f2b !important;
   color: white !important;
 }
 
-html, body {
-  width: 100%; 
+html,
+body {
+  width: 100%;
 }
 
 .btn-warning {
-  background-color: #F28B04 !important;
+  background-color: #f28b04 !important;
 }
 
 .btn-dark {
   background-color: #374251 !important;
+}
+
+.dot-animate::after {
+  content: "";
+  display: inline-block;
+  animation: dots 1.5s steps(3, end) infinite;
+}
+
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  33% {
+    content: ".";
+  }
+  66% {
+    content: "..";
+  }
+  100% {
+    content: "...";
+  }
 }
