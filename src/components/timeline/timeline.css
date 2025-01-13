@@ -4,13 +4,13 @@
   margin-left: 30px;
   padding: 0 20px;
   border-left: 2px solid #2B3A4A;
-  height: calc(100vh - 520px);
+  height: calc(100vh - 480px);
   flex-grow: 1;
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 60px;
+  margin-bottom: 75px;
   display: flex;
   align-items: center;
 }

@@ -55,7 +55,7 @@ const Timeline: React.FC = () => {
 
   const handleRegisterPoint = async () => {
     try {
-      await registerPoint(); 
+      await registerPoint();
       await fetchTodayRecords();
     } catch (err) {
       console.error("Erro ao registrar ponto:", err);
@@ -64,20 +64,25 @@ const Timeline: React.FC = () => {
 
   const formatTime = (dateString: string): string => {
     const date = new Date(dateString);
-    const hours = date.getUTCHours().toString().padStart(2, "0");
-    const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+
+    date.setHours(date.getUTCHours() - 3);
+
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
     return `${hours}:${minutes}`;
   };
 
   const formatWorkedHours = (workedHours: number): string => {
     const totalSeconds = Math.round(workedHours * 3600);
-    const hours = Math.floor(totalSeconds / 3600).toString().padStart(2, "0");
+    const hours = Math.floor(totalSeconds / 3600)
+      .toString()
+      .padStart(2, "0");
     const minutes = Math.floor((totalSeconds % 3600) / 60)
       .toString()
       .padStart(2, "0");
     const seconds = (totalSeconds % 60).toString().padStart(2, "0");
     return `${hours}:${minutes}:${seconds}`;
-  }
+  };
 
   if (loading) {
     return <Loading />;
