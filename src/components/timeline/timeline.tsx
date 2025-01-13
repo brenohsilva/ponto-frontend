@@ -86,6 +86,10 @@ const Timeline: React.FC = () => {
       .toString()
       .padStart(2, "0");
     const seconds = (totalSeconds % 60).toString().padStart(2, "0");
+    if (!totalSeconds || !hours || !minutes) {
+      return "00:00:00"
+      
+    }
     return `${hours}:${minutes}:${seconds}`;
   };
 
