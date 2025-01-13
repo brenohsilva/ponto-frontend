@@ -82,6 +82,17 @@ http://localhost:3000
 - **Visualizar Histórico Mensal:** Exibe um resumo dos registros de ponto do mês.
 - **Responsividade:** Interface otimizada para dispositivos móveis e desktops.
 
+O Fluxo do aplicativo se resume a registrar até 4 pontos por dia, sendo eles:
+
+Entrada;
+Ida para o Almoço;
+Volta do Almoço;
+Saída;
+
+Não sendo computadas as horas do almoço nas horas trabalhadas.
+
+**As horas trabalhadas é atualizada a cada ciclo de ponto, por exemplo: O funcionário bateu a Entrada, depois o funcionário bateu a Ida para o almoço, o sistema irá atualizar as horas trabalhadas nesse periodo."**
+
 ## Tecnologias Utilizadas
 
 - **React**
