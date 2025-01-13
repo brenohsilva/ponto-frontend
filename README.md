@@ -9,6 +9,17 @@ Este projeto é o frontend da aplicação de folha de ponto, desenvolvido com Re
 - **Estilização:** CSS e Bootstrap
 - **Roteamento:** React Router
 - **Autenticação:** Baseada em tokens JWT
+- Containerização: Docker
+
+Pré-requisitos
+
+Certifique-se de ter as seguintes ferramentas instaladas em sua máquina:
+
+Node.js (v18 ou superior)
+
+Docker
+
+Docker Compose
 
 ## Configuração do Ambiente
 
@@ -32,6 +43,19 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
    ```
 
    **Para fins de testes, foi criado um arquivo chamado config.ts para armazenar a url da api desse projeto, deixando o projeto pronto para ser iniciado**
+
+Com Docker
+
+Certifique-se de que o Docker e o Docker Compose estão instalados.
+
+Execute o seguinte comando para iniciar o contêiner:
+
+docker-compose up --build
+
+Acesse a aplicação no endereço:
+
+http://localhost:3000
+
 
 ## Como Executar a Aplicação
 
