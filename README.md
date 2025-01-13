@@ -6,7 +6,7 @@ Este projeto é o frontend da aplicação de folha de ponto, desenvolvido com Re
 
 - **Framework:** React
 - **Build Tool:** Vite
-- **Estilização:** CSS
+- **Estilização:** CSS e Bootstrap
 - **Roteamento:** React Router
 - **Autenticação:** Baseada em tokens JWT
 
@@ -23,13 +23,15 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
 2. Instale as dependências:
    ```bash
    npm install
-   ```
+   ```   
 
 3. Configure as variáveis de ambiente:
    Crie um arquivo `.env` na raiz do projeto e defina a variável `VITE_API_BASE_URL` com a URL do backend:
    ```env
    VITE_API_BASE_URL=http://localhost:3000
    ```
+
+   **Para fins de testes, foi criado um arquivo chamado config.ts para armazenar a url da api desse projeto, deixando o projeto pronto para ser iniciado**
 
 ## Como Executar a Aplicação
 
@@ -61,24 +63,5 @@ Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
 - **React**
 - **Vite**
 - **CSS**
+- **Bootstrap**
 - **React Router**
-
-## Deploy
-
-Para realizar o deploy da aplicação, siga os passos:
-
-1. Gere o build de produção:
-   ```bash
-   npm run build
-   ```
-
-2. Suba os arquivos da pasta `dist` para uma plataforma de hospedagem como [Vercel](https://vercel.com/) ou [Netlify](https://www.netlify.com/).
-
-## Contribuição
-
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
-
