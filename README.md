@@ -1,50 +1,84 @@
-# React + TypeScript + Vite
+# Folha de Ponto - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é o frontend da aplicação de folha de ponto, desenvolvido com React e Vite. Ele é responsivo e oferece uma interface intuitiva para os funcionários registrarem e visualizarem seus pontos.
 
-Currently, two official plugins are available:
+## Características Principais
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework:** React
+- **Build Tool:** Vite
+- **Estilização:** CSS
+- **Roteamento:** React Router
+- **Autenticação:** Baseada em tokens JWT
 
-## Expanding the ESLint configuration
+## Configuração do Ambiente
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Certifique-se de ter o [Node.js](https://nodejs.org/) instalado.
 
-- Configure the top-level `parserOptions` property like this:
+1. Clone este repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
+   ```
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+2. Instale as dependências:
+   ```bash
+   npm install
+   ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+3. Configure as variáveis de ambiente:
+   Crie um arquivo `.env` na raiz do projeto e defina a variável `VITE_API_BASE_URL` com a URL do backend:
+   ```env
+   VITE_API_BASE_URL=http://localhost:3000
+   ```
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Como Executar a Aplicação
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Inicie o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   ```
+
+2. Acesse a aplicação no navegador:
+   ```
+   http://localhost:5173
+   ```
+
+## Scripts Disponíveis
+
+- **`npm run dev`**: Inicia o servidor de desenvolvimento.
+- **`npm run build`**: Gera os arquivos otimizados para produção.
+- **`npm run preview`**: Visualiza a aplicação após o build.
+
+## Funcionalidades
+
+- **Login:** Permite ao usuário acessar o sistema com seu código de acesso.
+- **Registrar Ponto:** Facilita o registro de entrada, saída e intervalos.
+- **Visualizar Histórico Mensal:** Exibe um resumo dos registros de ponto do mês.
+- **Responsividade:** Interface otimizada para dispositivos móveis e desktops.
+
+## Tecnologias Utilizadas
+
+- **React**
+- **Vite**
+- **CSS**
+- **React Router**
+
+## Deploy
+
+Para realizar o deploy da aplicação, siga os passos:
+
+1. Gere o build de produção:
+   ```bash
+   npm run build
+   ```
+
+2. Suba os arquivos da pasta `dist` para uma plataforma de hospedagem como [Vercel](https://vercel.com/) ou [Netlify](https://www.netlify.com/).
+
+## Contribuição
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e enviar pull requests.
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
