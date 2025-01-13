@@ -115,7 +115,7 @@ const Timeline: React.FC = () => {
       </div>
       <div className="worked-hours d-flex flex-column gap-3">
         <span className="text-center">
-          Horas trabalhadas: <strong>{formatWorkedHours(workedHours)}</strong>
+          Horas trabalhadas: <strong>{formatWorkedHours(workedHours) || "00:00:00"}</strong>
         </span>
         <button
           onClick={handleRegisterPoint}
