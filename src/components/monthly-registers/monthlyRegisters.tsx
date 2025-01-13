@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import "./monthlyRegisters.css";
 import { employeeService } from "../../services/employeeService";
 import Loading from "../loading/loading";
+import { formatBalance } from "../../utils/formatBalance";
 
 const MonthlyRegisters: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<number>(1);
@@ -32,15 +33,6 @@ const MonthlyRegisters: React.FC = () => {
   ];
 
   const years = ["2024", "2025"];
-
-  const formatBalance = (balance: number): string => {
-    const totalMinutes = Math.round(balance * 60);
-    const hours = Math.floor(Math.abs(totalMinutes) / 60);
-    const minutes = Math.abs(totalMinutes) % 60;
-    return `${balance < 0 ? "-" : "+"}${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}`;
-  };
 
   useEffect(() => {
     const getRecords = async () => {
